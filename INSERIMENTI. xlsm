@@ -1,0 +1,67 @@
+
+Private Sub btnInserisciDati_Click()
+    ' Dichiarazione delle variabili per memorizzare i dati delle caselle di testo
+    Dim nome As String
+    Dim cognome As String
+    Dim dataNascita As Date
+    Dim eta As Integer
+    Dim codiceFiscale As String
+    Dim numeroCorso As String
+    Dim annoIscrizione As Integer
+    Dim tipoCorso As String
+    Dim tipoIstruzione As String
+    
+    ' Recupera i dati inseriti nelle caselle di testo (TextBox)
+    nome = txtNome.Text
+    cognome = txtCognome.Text
+    dataNascita = CDate(txtDataNascita.Text)
+    
+    ' Calcola l'età basata sulla data di nascita e la data odierna
+    eta = DateDiff("yyyy", dataNascita, Date)
+    
+    ' Recupera gli altri dati
+    codiceFiscale = txtCodiceFiscale.Text
+    numeroCorso = txtNumeroCorso.Text
+    annoIscrizione = CInt(txtAnnoIscrizione.Text)
+    tipoCorso = txtTipoCorso.Text
+    tipoIstruzione = txtTipoIstruzione.Text
+    
+    ' Seleziona il foglio "Dati"
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Dati")
+    
+    ' Inserisce i dati nelle celle specifiche (A1, B1, C1, etc.)
+    ws.Range("A1").Value = nome
+    ws.Range("B1").Value = cognome
+    ws.Range("C1").Value = dataNascita
+    ws.Range("D1").Value = eta
+    ws.Range("E1").Value = codiceFiscale
+    ws.Range("F1").Value = numeroCorso
+    ws.Range("G1").Value = annoIscrizione
+    ws.Range("H1").Value = tipoCorso
+    ws.Range("I1").Value = tipoIstruzione
+    
+    ' Pulisce le caselle di testo per permettere un nuovo inserimento
+    txtNome.Text = ""
+    txtCognome.Text = ""
+    txtDataNascita.Text = ""
+    txtCodiceFiscale.Text = ""
+    txtNumeroCorso.Text = ""
+    txtAnnoIscrizione.Text = ""
+    txtTipoCorso.Text = ""
+    txtTipoIstruzione.Text = ""
+    
+    ' Mostra la finestra di salvataggio per chiedere dove salvare il file
+    Dim savePath As String
+    savePath = Application.GetSaveAsFilename( _
+        InitialFileName:="Dati_Corso.xlsx", _
+        FileFilter:="Excel Files (*.xlsx), *.xlsx")
+    
+    ' Se l'utente ha scelto una posizione e nome, salva il file
+    If savePath <> "False" Then
+        ThisWorkbook.SaveAs savePath
+        MsgBox "Dati inseriti con successo e file salvato!", vbInformation
+    Else
+        MsgBox "Salvataggio annullato.", vbExclamation
+    End If
+End Sub
