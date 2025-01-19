@@ -1,0 +1,38 @@
+Sub ControllaSeListBoxVuota()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Foglio1") ' Assicurati che il foglio sia corretto
+    
+    If ws.ListBox1.ListCount = 0 Then
+        MsgBox "La ListBox è vuota!"
+    Else
+        MsgBox "La ListBox contiene degli elementi."
+    End If
+End Sub
+-----------
+Sub VerificaSeElementoSelezionato()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Foglio1") ' Assicurati che il foglio sia corretto
+    
+    If ws.ListBox1.ListIndex = -1 Then
+        MsgBox "Nessun elemento selezionato!"
+    Else
+        MsgBox "Elemento selezionato: " & ws.ListBox1.Value
+    End If
+End Sub
+---------
+Sub ScorriListBox()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Foglio1") ' Assicurati che il foglio sia corretto
+    
+    Dim i As Integer
+    Dim listaElementi As String
+    
+    ' Ciclo attraverso tutti gli elementi nella ListBox
+    For i = 0 To ws.ListBox1.ListCount - 1
+        listaElementi = ws.ListBox1.List(i) ' Ottieni l'elemento alla posizione i
+        Debug.Print "Elemento " & i + 1 & ": " & listaElementi ' Stampa il valore nel Debug
+    Next i
+    
+    ' Messaggio di fine ciclo
+    MsgBox "Scorri tutti gli elementi della ListBox!"
+End Sub
