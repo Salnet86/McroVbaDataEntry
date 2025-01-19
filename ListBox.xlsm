@@ -1,0 +1,27 @@
+Sub PopolaListBox()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Foglio1") ' Assicurati che il foglio sia corretto
+    
+    ' Aggiunge elementi alla ListBox (modifica questi valori come desideri)
+    ws.ListBox1.Clear ' Pulisce la ListBox se ci sono elementi precedenti
+    ws.ListBox1.AddItem "Elemento 1"
+    ws.ListBox1.AddItem "Elemento 2"
+    ws.ListBox1.AddItem "Elemento 3"
+    ws.ListBox1.AddItem "Elemento 4"
+    
+    ' Informazione di successo
+    MsgBox "Lista popolata!"
+End Sub
+
+Sub RecuperaSelezioneListBox()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Foglio1") ' Assicurati che il foglio sia corretto
+    
+    ' Controlla se è stato selezionato un elemento dalla ListBox
+    If ws.ListBox1.ListIndex <> -1 Then
+        ' Inserisce il valore selezionato nella cella D1
+        ws.Range("D1").Value = ws.ListBox1.Value
+    Else
+        MsgBox "Nessun elemento selezionato!"
+    End If
+End Sub
