@@ -1,0 +1,57 @@
+
+Sub CaricaDatiDaSQLServer()
+    Dim conn As Object
+    Dim rs As Object
+    Dim connString As String
+    Dim sqlQuery As String
+    Dim lista As Object
+    Dim ws As Worksheet
+    Dim i As Integer
+
+    ' Inizializzazione del foglio di lavoro
+    Set ws = ThisWorkbook.Sheets("Foglio1") ' Modifica con il nome del tuo foglio
+    
+    ' Stringa di connessione al database SQL Server
+    connString = "Provider=SQLOLEDB;Data Source=tuo_server_sql;Initial Catalog=tuo_database;User ID=tuo_utente;Password=tuo_password;"
+    
+    ' La query SQL per recuperare i dati
+    sqlQuery = "SELECT nome_colonna FROM tua_tabella" ' Modifica la query con la tua
+
+    ' Creazione della connessione ADO
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open connString
+
+    ' Esecuzione della query
+    Set rs = conn.Execute(sqlQuery)
+
+    ' Creazione della lista VBA (Collection)
+    Set lista = New Collection
+    
+    ' Aggiunta dei dati recuperati alla lista
+    Do While Not rs.EOF
+        lista.Add rs.Fields(0).Value 
+        rs.MoveNext
+    Loop
+    
+    ' Chiusura della connessione
+    rs.Close
+    conn.Close
+
+    ' Riempimento di un ComboBox (o ListBox) con i dati dalla lista
+    ws.ComboBox1.Clear ' Svuota il ComboBox (se già esistente)
+    
+    For i = 1 To lista.Count
+        ws.ComboBox1.AddItem lista(i)
+    Next i
+    
+    ' Informazioni su successo
+    MsgBox "Dati caricati nella lista!"
+End Sub
+
+Sub SelezionaElementoLista()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Foglio1") ' Modifica con il nome del tuo foglio
+
+    ' Inserisce l'elemento selezionato nella cella D1
+    ws.Range("D1").Value = ws.ComboBox1.Value
+End Sub
