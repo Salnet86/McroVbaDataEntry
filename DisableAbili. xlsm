@@ -1,0 +1,11 @@
+Sub AbilitaDisabilitaPulsante()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Foglio1") ' Assicurati che il foglio sia corretto
+    
+    ' Se la ListBox è vuota, disabilita il pulsante
+    If ws.ListBox1.ListCount = 0 Then
+        ws.Button1.Enabled = False ' Disabilita il pulsante
+    Else
+        ws.Button1.Enabled = True ' Abilita il pulsante
+    End If
+End Sub
