@@ -1,0 +1,64 @@
+Private Sub btnInserisciDati_Click()
+    ' Dichiarazione delle variabili per memorizzare i dati delle caselle di testo
+    Dim nome As String
+    Dim cognome As String
+    Dim dataNascita As Date
+    Dim eta As Integer
+    Dim codiceFiscale As String
+    Dim numeroCorso As String
+    Dim annoIscrizione As Integer
+    Dim tipoCorso As String
+    Dim tipoIstruzione As String
+    
+    ' Recupera i dati inseriti nelle caselle di testo (TextBox)
+    nome = txtNome.Text
+    cognome = txtCognome.Text
+    dataNascita = CDate(txtDataNascita.Text)
+    
+    ' Calcola l'età basata sulla data di nascita e la data odierna
+    eta = DateDiff("yyyy", dataNascita, Date)
+    
+    ' Recupera gli altri dati
+    codiceFiscale = txtCodiceFiscale.Text
+    numeroCorso = txtNumeroCorso.Text
+    annoIscrizione = CInt(txtAnnoIscrizione.Text)
+    tipoCorso = txtTipoCorso.Text
+    tipoIstruzione = txtTipoIstruzione.Text
+    
+    ' Dichiarazione della connessione e del comando SQL
+    Dim conn As Object
+    Dim rs As Object
+    Dim connStr As String
+    Dim sql As String
+    
+    ' Stringa di connessione al database SQL Server
+    connStr = "Provider=SQLOLEDB;Data Source=NomeServer;Initial Catalog=NomeDatabase;User ID=NomeUtente;Password=TuaPassword;"
+    
+    ' Crea la connessione
+    Set conn = CreateObject("ADODB.Connection")
+    conn.Open connStr
+    
+    ' Prepara la query SQL per inserire i dati
+    sql = "INSERT INTO TabellaDati (Nome, Cognome, DataNascita, Eta, CodiceFiscale, NumeroCorso, AnnoIscrizione, TipoCorso, TipoIstruzione) " & _
+          "VALUES ('" & nome & "', '" & cognome & "', '" & dataNascita & "', " & eta & ", '" & codiceFiscale & "', '" & numeroCorso & "', " & annoIscrizione & ", '" & tipoCorso & "', '" & tipoIstruzione & "')"
+    
+    ' Esegui la query SQL
+    conn.Execute sql
+    
+    ' Chiudi la connessione
+    conn.Close
+    Set conn = Nothing
+    
+    ' Pulisce le caselle di testo per permettere un nuovo inserimento
+    txtNome.Text = ""
+    txtCognome.Text = ""
+    txtDataNascita.Text = ""
+    txtCodiceFiscale.Text = ""
+    txtNumeroCorso.Text = ""
+    txtAnnoIscrizione.Text = ""
+    txtTipoCorso.Text = ""
+    txtTipoIstruzione.Text = ""
+    
+    ' Mostra il messaggio di conferma
+    MsgBox "Dati inseriti con successo nel database!", vbInformation
+End Sub
