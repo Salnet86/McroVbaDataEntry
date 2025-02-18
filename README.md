@@ -1,4 +1,4 @@
-# McroVbaDataEntry
+# MacroVbaDataEntry
          Tecnico informatico 
 # Progetto di Automazione del Processo di Data Entry con VBA e Gestione Calendari
 
